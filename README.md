@@ -138,38 +138,9 @@ NetSec_AI_Scanner/
 
 ---
 
-## 🌐 Deployment Guide
+## 🌐 Deployment 
 
-Since standard web hosting (like Vercel) blocks Nmap, here are your deployment options:
-
-### Option A: Local Tunneling (Recommended)
-
-Run the app on your laptop but give judges a public link.
-
-1. Run your app:
-   ```bash
-   python main.py
-   ```
-
-2. Open a new terminal and run:
-   ```bash
-   ssh -R 80:localhost:8501 serveo.net
-   ```
-
-3. Copy the URL it gives you (e.g., `https://random-name.serveo.net`) and submit that.
-
-### Option B: Streamlit Cloud (Code Demo Only)
-
-1. Create a file named `packages.txt` in your root folder.
-
-2. Add the following inside it:
-   ```text
-   nmap
-   ```
-
-3. Deploy via [share.streamlit.io](https://share.streamlit.io).
-
-> ⚠️ **Note:** Deep scans and Scapy firewall tests might fail due to cloud permission limits, but the UI will load perfectly.
+The app is deployed on this url: https://netsec-ai-scanner.onrender.com
 
 ---
 
