@@ -1,0 +1,31 @@
+# Use an official lightweight Python image
+FROM python:3.10-slim
+
+# Prevent Python from writing pyc files
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# 1. Install System Dependencies (Nmap, Libpcap for Scapy)
+# We clean up apt cache to keep the image small
+RUN apt-get update && apt-get install -y \
+    nmap \
+    libpcap-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# 2. Set Work Directory
+WORKDIR /app
+
+# 3. Install Python Dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 4. Copy Application Code
+COPY . .
+
+# 5. Expose Streamlit Port
+EXPOSE 8501
+
+# 6. Run as Root (Required for Nmap/Scapy)
+# Note: Streamlit usually warns against this, but we need it for Nmap.
+CMD ["streamlit", "run", "src/ui/dashboard.py", "--server.port=8501", "--server.address=0.0.0.0"]
