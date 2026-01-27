@@ -140,7 +140,7 @@ NetSec_AI_Scanner/
 
 ## 🌐 Deployment 
 
-The app is deployed on this url: https://netsec-ai-scanner.onrender.com
+The app is deployed on this url: https://netsec-ai-scanner.streamlit.app/
 
 ---
 
