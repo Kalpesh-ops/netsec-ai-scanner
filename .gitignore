@@ -38,6 +38,10 @@ env/
 # Firebase credentials (SENSITIVE)
 config/firebase_key.json
 
+# Frontend dependencies
+node_modules/
+frontend/node_modules/
+
 # IDE / Editor
 .vscode/
 .idea/
