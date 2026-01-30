@@ -188,7 +188,7 @@ export default function App() {
                         onClick={() => setScanMode(mode.key)}
                         className={`flex-1 py-2 px-2 text-[10px] font-bold uppercase tracking-wider rounded transition-all ${
                           scanMode === mode.key
-                            ? 'bg-cyber-neon text-black border border-cyber-neon shadow-[0_0_10px_rgba(0,243,255,0.4)] hover:shadow-[0_0_15px_rgba(0,243,255,0.6)]'
+                            ? 'bg-cyber-neon text-gray-700 border border-cyber-neon shadow-[0_0_10px_rgba(0,243,255,0.4)] hover:shadow-[0_0_15px_rgba(0,243,255,0.6)]'
                             : 'bg-black/50 text-gray-400 border border-gray-700 hover:border-cyber-neon/50'
                         }`}
                       >
