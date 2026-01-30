@@ -101,9 +101,6 @@ NetSec_AI_Scanner/
 ├── 📄 README.md                    # This file
 ├── 📄 .env                         # Environment variables (API keys, credentials)
 ├── 📄 .gitignore                   # Git ignore rules
-├── 📄 instructions.md              # Setup instructions
-├── 📄 PROJECT_CONTEXT.md           # Project context documentation
-├── 📄 SECURITY_ANALYSIS_REPORT.md  # Security audit findings
 │
 ├── 📁 config/                      # Configuration & Credentials
 │   ├── settings.py                 # Application configuration
@@ -138,44 +135,28 @@ NetSec_AI_Scanner/
 │       ├── validators.py           # Input validation
 │       └── __init__.py
 │
-├── 📁 frontend/                    # React Frontend Application
-│   ├── index.html                  # HTML entry point
-│   ├── package.json                # npm dependencies (React 19.2.4, Vite 7.3.1)
-│   ├── package-lock.json           # Lock file for reproducible builds
-│   ├── vite.config.js              # Vite build configuration
-│   ├── tailwind.config.js          # Tailwind CSS configuration
-│   ├── postcss.config.js           # PostCSS configuration
-│   ├── eslint.config.js            # Code quality configuration
-│   │
-│   ├── src/                        # React Source Code
-│   │   ├── main.jsx                # React entry point
-│   │   ├── App.jsx                 # Main application component
-│   │   ├── App.css                 # Application styles
-│   │   ├── index.css               # Global styles
-│   │   │
-│   │   ├── components/             # React Components
-│   │   │   └── ParticleNetwork.jsx # Interactive particle visualization
-│   │   │
-│   │   └── assets/                 # Static assets
-│   │
-│   └── public/                     # Static files served as-is
-│
-├── 📁 guides/                      # Documentation & Architecture Guides
-│   ├── QUICK_START.md              # Getting started guide
-│   ├── QUICK_REFERENCE.md          # Quick lookup reference
-│   ├── ARCHITECTURE_V2.md          # Detailed system architecture
-│   ├── IMPLEMENTATION_GUIDE.md     # Feature implementation guide
-│   ├── IMPLEMENTATION_COMPLETE.md  # Implementation status
-│   ├── IMPLEMENTATION_STATUS.md    # Progress tracking
-│   ├── FINAL_STATUS.md             # Project completion status
-│   ├── SYSTEM_TEST_RESULTS.md      # Testing documentation
-│   ├── PROJECT_CONTEXT.md          # Project context (also in root)
-│   └── SECURITY_ANALYSIS_REPORT.md # Security audit (also in root)
-│
-└── 📁 logs/                        # Runtime Artifacts (Git ignored)
-    ├── app.log                     # Application logs
-    ├── captures/                   # TShark packet captures
-    └── temp_scans/                 # Temporary scan results
+└── 📁 frontend/                    # React Frontend Application
+    ├── index.html                  # HTML entry point
+    ├── package.json                # npm dependencies (React 19.2.4, Vite 7.3.1)
+    ├── package-lock.json           # Lock file for reproducible builds
+    ├── vite.config.js              # Vite build configuration
+    ├── tailwind.config.js          # Tailwind CSS configuration
+    ├── postcss.config.js           # PostCSS configuration
+    ├── eslint.config.js            # Code quality configuration
+    │
+    ├── src/                        # React Source Code
+    │   ├── main.jsx                # React entry point
+    │   ├── App.jsx                 # Main application component
+    │   ├── App.css                 # Application styles
+    │   ├── index.css               # Global styles
+    │   │
+    │   ├── components/             # React Components
+    │   │   └── ParticleNetwork.jsx # Interactive particle visualization
+    │   │
+    │   └── assets/                 # Static assets
+    │
+    └── public/                     # Static files served as-is
+
 ```
 
 ### **Notes on Directory Structure:**
