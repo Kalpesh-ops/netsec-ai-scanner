@@ -74,6 +74,7 @@ htmlcov/
 
 # Streamlit
 .streamlit/secrets.toml
+.streamlit
 
 # Nmap output files
 *.xml
