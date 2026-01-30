@@ -188,7 +188,7 @@ export default function App() {
                         onClick={() => setScanMode(mode.key)}
                         className={`flex-1 py-2 px-2 text-[10px] font-bold uppercase tracking-wider rounded transition-all ${
                           scanMode === mode.key
-                            ? 'bg-cyber-neon text-black border border-cyber-neon'
+                            ? 'bg-cyber-neon text-black border border-cyber-neon shadow-[0_0_10px_rgba(0,243,255,0.4)] hover:shadow-[0_0_15px_rgba(0,243,255,0.6)]'
                             : 'bg-black/50 text-gray-400 border border-gray-700 hover:border-cyber-neon/50'
                         }`}
                       >
@@ -260,7 +260,7 @@ export default function App() {
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 p-4 bg-black/40 border-b border-gray-800">
                   <StatusCard icon={Globe} title="Target" value={rawData?.target} color="cyber-neon" />
                   <StatusCard icon={Layers} title="Ports" value={rawData?.hosts?.[0]?.open_ports?.length || 0} color="blue-500" />
-                  <StatusCard icon={Shield} title="Firewall" value={rawData?.firewall_analysis?.firewall_status || "N/A"} color="purple-500" />
+                  <StatusCard icon={Shield} title="Firewall" value={rawData?.firewall_analysis?.firewall_status ? rawData.firewall_analysis.firewall_status : (rawData?.firewall_analysis?.error ? "Auth Error" : "N/A")} color="purple-500" />
                   <StatusCard icon={AlertTriangle} title="Status" value="Scan Complete" color="green-500" />
                 </div>
 
@@ -341,9 +341,16 @@ export default function App() {
                           </div>
                           <div className="col-span-1 md:col-span-2 border-t border-gray-800 pt-3">
                              <span className="text-gray-600 block mb-1">FIREWALL PROBE RESPONSE</span>
-                             <span className={`px-2 py-1 rounded ${rawData.firewall_analysis?.firewall_status?.includes('Secure') ? 'bg-green-900/20 text-green-400' : 'bg-red-900/20 text-red-400'}`}>
-                                {JSON.stringify(rawData.firewall_analysis)}
-                             </span>
+                             {rawData?.firewall_analysis?.error ? (
+                               <div className="bg-red-900/20 border border-red-500/50 p-2 rounded text-red-300 text-[10px]">
+                                 <p className="font-bold">⚠️ Probe Failed</p>
+                                 <p className="text-[9px] mt-1">{rawData.firewall_analysis.error}</p>
+                               </div>
+                             ) : (
+                               <span className={`px-2 py-1 rounded text-[10px] block ${rawData.firewall_analysis?.firewall_status?.includes('Secure') ? 'bg-green-900/20 text-green-400' : 'bg-yellow-900/20 text-yellow-400'}`}>
+                                 {rawData.firewall_analysis?.firewall_status || "No data available"}
+                               </span>
+                             )}
                           </div>
                         </div>
                       </div>
