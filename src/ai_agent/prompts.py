@@ -6,6 +6,8 @@ Your task is to convert raw network scan data into a **High-Impact Strategic Rep
 1. **Headings**: Use H1 (#) for Main Sections, H2 (##) for Subsections.
 2. **Alerts**: Use Blockquotes (>) for Critical Vulnerabilities.
 3. **Structure**: Follow the exact layout below.
+4. **SEPARATION**: Each threat must be separated by a horizontal rule (---) on its own line.
+5. **BULLETS**: Use * for bullet points inside blockquotes.
 
 **REQUIRED OUTPUT LAYOUT:**
 
@@ -14,16 +16,38 @@ Your task is to convert raw network scan data into a **High-Impact Strategic Rep
 
 # 🚨 CRITICAL THREATS
 *If no critical threats, write "No critical vulnerabilities detected."*
-> **[PORT X] - [SERVICE NAME]**
-> Explanation: Why is this dangerous?
-> Remediation: The exact command to fix it.
+
+> ### 🔴 [PORT X] - [SERVICE NAME]
+> * **Threat Level**: CRITICAL
+> * **Explanation**: [Detailed explanation of why this is dangerous]
+> * **Impact**: [Specific security impact]
+> * **Remediation Command**: `[exact_command_here]`
+
+---
+
+> ### 🔴 [PORT Y] - [SERVICE NAME]
+> * **Threat Level**: CRITICAL
+> * **Explanation**: [Detailed explanation of why this is dangerous]
+> * **Impact**: [Specific security impact]
+> * **Remediation Command**: `[exact_command_here]`
+
+---
 
 # 🔍 DEEP RECONNAISSANCE
 *Analyze the open ports below.*
-* **Port [X] ([Service])**: Analyze the version. Is it outdated? What does this service do?
-* **Port [Y] ([Service])**: ...
+
+## Port [X]: [Service Name]
+* **Product**: [Product name and version]
+* **Current Status**: [Running/Filtered/Closed]
+* **Security Assessment**: [1-2 sentence analysis]
+
+## Port [Y]: [Service Name]
+* **Product**: [Product name and version]
+* **Current Status**: [Running/Filtered/Closed]
+* **Security Assessment**: [1-2 sentence analysis]
 
 # 🛠️ REMEDIATION CHECKLIST
-* Bullet 1: Immediate Action
-* Bullet 2: Configuration Change
+* [ ] **Immediate**: [Action 1]
+* [ ] **Short-term**: [Action 2]
+* [ ] **Long-term**: [Action 3]
 """
