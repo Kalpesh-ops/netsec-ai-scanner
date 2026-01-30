@@ -73,9 +73,16 @@ export default function App() {
   const [logs, setLogs] = useState([]);
   const [report, setReport] = useState(null);
   const [rawData, setRawData] = useState(null);
-  const [activeTab, setActiveTab] = useState('report'); 
+  const [activeTab, setActiveTab] = useState('report');
+  const [scanMode, setScanMode] = useState('fast');
 
   const addLog = (msg) => setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] ${msg}`]);
+
+  const scanModes = [
+    { key: 'fast', label: 'Fast Scan', desc: 'Top 100 ports' },
+    { key: 'deep', label: 'Deep Scan', desc: 'All ports + versions' },
+    { key: 'pen_test', label: 'Pen Testing', desc: 'Aggressive + traffic capture' }
+  ];
 
   const handleScan = async () => {
     if (!target) return;
@@ -84,11 +91,18 @@ export default function App() {
     setReport(null);
     setRawData(null);
     addLog(`INITIATING TARGET LOCK: ${target}`);
+    addLog(`SCAN MODE: ${scanMode.toUpperCase()}`);
     
     try {
       addLog(">> DEPLOYING NMAP PROBES...");
-      const scanRes = await axios.post('http://127.0.0.1:8000/api/scan', { target, scan_type: 'fast' });
+      const scanRes = await axios.post('http://127.0.0.1:8000/api/scan', { target, scan_mode: scanMode });
       setRawData(scanRes.data.data);
+      
+      if (scanRes.data.scan_profile) {
+        const est = scanRes.data.scan_profile.estimated_seconds;
+        addLog(`>> ESTIMATED TIME: ${est.total}s (Nmap: ${est.nmap}s, Scapy: ${est.scapy}s, TShark: ${est.tshark}s)`);
+      }
+      
       addLog(">> PACKET CAPTURE SUCCESSFUL.");
       
       setStatus('ANALYZING');
@@ -101,7 +115,7 @@ export default function App() {
       
     } catch (error) {
       setStatus('ERROR');
-      addLog(`!! CRITICAL FAILURE: ${error.message}`);
+      addLog(`!! CRITICAL FAILURE: ${error?.response?.data?.detail || error.message}`);
     }
   };
 
@@ -162,6 +176,30 @@ export default function App() {
                   placeholder="192.168.1.1"
                   className="w-full mt-2 bg-black/50 border border-cyber-neon/30 rounded p-3 text-cyber-neon focus:outline-none focus:border-cyber-neon focus:ring-1 focus:ring-cyber-neon transition-all"
                 />
+              </div>
+
+              <div>
+                <label className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Scan Mode</label>
+                <div className="mt-2 bg-black/50 border border-cyber-neon/30 rounded p-3 space-y-2">
+                  <div className="flex gap-2">
+                    {scanModes.map((mode) => (
+                      <button
+                        key={mode.key}
+                        onClick={() => setScanMode(mode.key)}
+                        className={`flex-1 py-2 px-2 text-[10px] font-bold uppercase tracking-wider rounded transition-all ${
+                          scanMode === mode.key
+                            ? 'bg-cyber-neon text-black border border-cyber-neon'
+                            : 'bg-black/50 text-gray-400 border border-gray-700 hover:border-cyber-neon/50'
+                        }`}
+                      >
+                        {mode.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-[9px] text-gray-500 italic">
+                    {scanModes.find(m => m.key === scanMode)?.desc}
+                  </p>
+                </div>
               </div>
               
               <button 

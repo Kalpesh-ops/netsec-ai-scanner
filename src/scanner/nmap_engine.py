@@ -32,43 +32,65 @@ class NmapScanner:
             logging.error(f"Error initializing scanner: {e}")
             raise
 
-    def run_scan(self, target, fast_mode=False):
+    def run_scan(self, target, mode="fast", fast_mode=None):
+        """
+        Execute Nmap scan with mode-specific arguments.
+        
+        Args:
+            target: IP address or hostname
+            mode: "fast" | "deep" | "pen_test"
+            fast_mode: (deprecated) kept for backwards compatibility
+        
+        Returns:
+            Structured JSON with scan results
+        """
         try:
             # Resolve target first to ensure validity
             socket.gethostbyname(target)
             
-            logging.info(f"Starting scan on target: {target}...")
+            # Support legacy fast_mode parameter
+            if fast_mode is not None:
+                mode = "fast" if fast_mode else "deep"
+            
+            logging.info(f"Starting {mode} scan on target: {target}...")
 
             # --- CRITICAL CLOUD FIX ---
             # Cloud Servers (Streamlit/Heroku) DO NOT allow root access.
             # We MUST use -sT (Connect Scan) instead of -sS (SYN Scan).
             # We must remove -O (OS Detection) as it requires root.
             
-            if fast_mode:
-                # -sT: Unprivileged Connect Scan
-                # -F: Fast mode (top 100 ports)
-                scan_args = "-sT -F" 
+            if mode == "fast":
+                # Fast: Top 100 ports, no version detection
+                scan_args = "-sT -F"
+            elif mode == "deep":
+                # Deep: All ports with version detection and vulnerability scripts
+                scan_args = "-sT -sV --version-intensity 5 --script vuln"
+            elif mode == "pen_test":
+                # Pen Testing: Version detection with extended probing, all ports (Windows-compatible)
+                # Note: Limiting to -sV with high intensity to avoid NSE compatibility issues on Windows
+                scan_args = "-sT -sV --version-intensity 9 -p-"
             else:
-                # -sT: Connect Scan
-                # -sV: Version Detection (Works without root!)
-                # --script vuln: Vulnerability scripts (Works without root!)
-                scan_args = "-sT -sV --script vuln"
+                # Fallback for unknown modes
+                scan_args = "-sT -F"
+            
+            logging.info(f"Executing: nmap {scan_args} {target}")
             
             # Run the scan
             self.scanner.scan(hosts=target, arguments=scan_args)
             
-            return self._structure_data_for_ai(target)
+            return self._structure_data_for_ai(target, mode)
             
         except Exception as e:
             logging.error(f"Scan failed: {e}")
             return {"error": f"Scan failed: {str(e)}"}
 
-    def _structure_data_for_ai(self, target):
+    def _structure_data_for_ai(self, target, mode="fast"):
         """
         Cleans the raw Nmap output into a clean JSON format.
         """
         clean_data = {
             "target": target,
+            "scan_mode": mode,
             "scan_stats": self.scanner.scanstats(),
             "hosts": []
         }
