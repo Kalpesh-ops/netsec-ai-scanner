@@ -5,6 +5,9 @@ import { Terminal, Shield, Activity, Lock, AlertTriangle, Download, FileText, Co
 import ParticleNetwork from './components/ParticleNetwork';
 import ReactMarkdown from 'react-markdown';
 
+// API configuration
+const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+
 // --- COMPONENTS ---
 
 const StatusCard = ({ icon: Icon, title, value, color }) => (
@@ -95,7 +98,7 @@ export default function App() {
     
     try {
       addLog(">> DEPLOYING NMAP PROBES...");
-      const scanRes = await axios.post('http://127.0.0.1:8000/api/scan', { target, scan_mode: scanMode });
+      const scanRes = await axios.post(`${API_URL}/api/scan`, { target, scan_mode: scanMode });
       setRawData(scanRes.data.data);
       
       if (scanRes.data.scan_profile) {
@@ -107,7 +110,7 @@ export default function App() {
       
       setStatus('ANALYZING');
       addLog(">> TRANSMITTING COMPRESSED DATA TO GEMINI...");
-      const aiRes = await axios.post('http://127.0.0.1:8000/api/analyze', scanRes.data.data);
+      const aiRes = await axios.post(`${API_URL}/api/analyze`, scanRes.data.data);
       
       setReport(aiRes.data.report);
       setStatus('COMPLETE');
