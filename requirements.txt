@@ -1,10 +1,7 @@
 python-nmap
 scapy
 google-generativeai
-streamlit
-firebase-admin
 python-dotenv
-pandas
 requests
 fastapi
 uvicorn
