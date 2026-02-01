@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use NetSec AI Scanner in academic work, please cite this project."
+title: "NetSec AI Scanner"
+authors:
+  - name: "Kalpesh Parashar"
+url: "https://netsec-ai-scanner.vercel.app/"
+date-released: "2026-02-01"
+license: "Apache-2.0"
