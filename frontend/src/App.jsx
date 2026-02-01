@@ -286,7 +286,9 @@ export default function App() {
                   
                   {/* TAB 1: EXECUTIVE REPORT */}
                   {activeTab === 'report' && (
-                    <div className="prose prose-invert prose-headings:text-white prose-p:text-gray-400 max-w-none">
+                    <div className="space-y-8">
+                      {/* AI Report */}
+                      <div className="prose prose-invert prose-headings:text-white prose-p:text-gray-400 max-w-none">
                        {/* Custom Renderers to style the Markdown nicely */}
                        <ReactMarkdown
                           components={{
@@ -300,6 +302,19 @@ export default function App() {
                        >
                          {report}
                        </ReactMarkdown>
+                      </div>
+
+                      {/* Critical Threats Port List */}
+                      {rawData?.hosts?.[0]?.open_ports && rawData.hosts[0].open_ports.length > 0 && (
+                        <div className="border-t border-gray-800 pt-6 mt-6">
+                          <h3 className="text-sm text-gray-500 uppercase font-bold mb-4 flex items-center gap-2"><AlertTriangle size={16} className="text-red-500"/> Detected Open Ports</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                            {rawData.hosts[0].open_ports.map((port, idx) => (
+                              <PortCard key={idx} port={port} />
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
