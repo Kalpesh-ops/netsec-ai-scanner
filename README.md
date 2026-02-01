@@ -1,27 +1,37 @@
 # 🛡️ NetSec AI Scanner
 > *Automated Network Vulnerability Scanning & AI-Powered Intelligence Analysis*
 
-![Python](https://img.shields.io/badge/Python-3.12+-blue?style=for-the-badge&logo=python)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![Node](https://img.shields.io/badge/Node-20%2B-339933?style=for-the-badge&logo=node.js)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
+
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi)
 ![React](https://img.shields.io/badge/React-19.2.4-61dafb?style=for-the-badge&logo=react)
 ![Gemini](https://img.shields.io/badge/Google%20Gemini%202.5-8E75B2?style=for-the-badge&logo=google)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase)
 
 ---
 
 ## 🚩 Problem Statement
-In the modern digital landscape, network security is complex. Tools like **Nmap** and **Wireshark** are powerful but output raw technical data that is incomprehensible to the average user or junior developer. Small businesses and students often leave critical ports open (like SMB or MySQL) simply because they don't understand the cryptic logs produced by traditional scanners.
+Network security tools generate high-fidelity data, but the output is often too cryptic for non-experts to act on quickly. Critical services remain exposed because remediation guidance is unclear or buried in raw logs.
 
 ---
 
 ## 💡 The Solution
-**NetSec AI** bridges the gap between complex security data and human understanding. It is an automated penetration testing tool that:
+**NetSec AI** turns raw network telemetry into clear, actionable security guidance:
 1.  **Scans** the network using industry-standard engines (Nmap & Scapy).
 2.  **Analyzes** the raw logs using **Google Gemini 2.5 Flash**.
-3.  **Translates** technical jargon into a clear, actionable "Fix-It" report.
-4.  **Preserves** history using a secure cloud database (Firebase).
+3.  **Translates** technical jargon into a concise remediation report.
 
 It turns *"Port 445 Open (Microsoft-DS)"* into *"High Risk: Your file sharing service is exposed. Block it using this firewall command..."*
+
+---
+
+## ✅ Why NetSec AI Scanner?
+- **Signal over noise**: Nmap provides high-quality data; Gemini turns it into prioritized, plain-language remediation steps.
+- **Actionable by design**: Findings are formatted for quick fixes, not just diagnostics.
+- **Security-grade workflow**: Sanitization, token optimization, and strict input validation are built in.
+- **Modern UX**: Real-time progress and reports through a React interface.
 
 ---
 
@@ -29,11 +39,19 @@ It turns *"Port 445 Open (Microsoft-DS)"* into *"High Risk: Your file sharing se
 
 The application is built on a modern **Full-Stack Architecture**:
 
+```mermaid
+flowchart LR
+  A[Frontend (Vercel)] --> B[Backend (GCP VM)]
+  B --> C[Nmap Engine]
+  C --> D[Gemini API]
+  D --> E[Result / Report]
+  E --> A
+```
+
 ### Backend Stack (FastAPI)
 - **Server**: FastAPI with Uvicorn ASGI server
 - **Scanning Engines**: Nmap, Scapy, TShark integration
 - **AI Analysis**: Google Gemini 2.5 Flash for intelligent threat assessment
-- **Database**: Firebase Firestore for scan history and user management
 - **API**: RESTful endpoints for network scanning and threat analysis
 
 ### Frontend Stack (React + Vite)
@@ -67,11 +85,10 @@ The application is built on a modern **Full-Stack Architecture**:
 - **Real-time Display**: Live scan progress with threat indicators
 - **Threat Metrics**: CVSS scoring, risk severity categorization
 - **Actionable Reports**: Clear remediation steps and firewall rules
-- **History Management**: Scan history with Firebase sync for multi-device access
 
 ---
 
-## � Google Technologies Integrated
+## 🔧 Google Technologies Integrated
 
 ### **Google Gemini 2.5 Flash** (Threat Intelligence Engine)
 | Component | Details |
@@ -81,15 +98,6 @@ The application is built on a modern **Full-Stack Architecture**:
 | **Implementation** | [src/ai_agent/gemini_client.py](src/ai_agent/gemini_client.py) |
 | **Prompting** | Specialized security analysis prompts in [src/ai_agent/prompts.py](src/ai_agent/prompts.py) |
 | **Integration** | Real-time API calls via `google-generativeai` SDK (v0.8.6+) |
-
-### **Google Firebase** (Auth & Data Persistence)
-| Component | Details |
-|-----------|---------|
-| **Authentication** | Anonymous & email-based authentication for flexible user access |
-| **Database** | Firestore for storing scan history, threat reports, and user preferences |
-| **Implementation** | [src/database/firebase_auth.py](src/database/firebase_auth.py) and [src/database/firestore_db.py](src/database/firestore_db.py) |
-| **Security** | Service account credentials stored securely in `.env` (never committed) |
-| **Sync** | Multi-device scan history synchronization with Firestore |
 
 ## 📂 Project Directory Structure
 
@@ -119,15 +127,6 @@ NetSec_AI_Scanner/
 │   │   ├── scapy_engine.py         # Firewall detection (ACK packets)
 │   │   ├── tshark_capture.py       # Packet capture analysis
 │   │   └── vuln_checker.py         # Vulnerability pattern extraction
-│   │
-│   ├── database/                   # Cloud Database Module
-│   │   ├── firebase_auth.py        # Firebase authentication logic
-│   │   └── firestore_db.py         # Firestore database operations
-│   │
-│   ├── ui/                         # Dashboard Components
-│   │   ├── dashboard.py            # Frontend integration handlers
-│   │   ├── components.py           # UI component utilities
-│   │   └── assets/                 # UI assets
 │   │
 │   └── utils/                      # Utility Functions
 │       ├── data_sanitizer.py       # PII redaction & data privacy
@@ -162,19 +161,26 @@ NetSec_AI_Scanner/
 ### **Notes on Directory Structure:**
 - ✅ **Committed to Git**: All source code, configuration templates, documentation
 - ❌ **Not Committed** (.gitignore): `node_modules/`, `__pycache__/`, `.venv/`, `logs/`, `.env` (use template)
-- 🔐 **Security**: Firebase credentials stored in `.env` (never versioned)
+- 🔐 **Security**: API keys and backend URLs are never committed to the repository
 - 🚀 **Production Ready**: Modular architecture, separated frontend/backend, clear concerns
 
 ---
 
-## 🚀 Getting Started
+## 💻 Local Development Setup
+
+Follow these steps to get the NetSec AI Scanner running on your local machine for development and testing.
 
 ### Prerequisites
 
 - **Python 3.12+** (Tested with Python 3.12.6)
-- **Nmap** installed and accessible in PATH
-- **Npcap** (Windows) or libpcap (Linux/macOS) for Scapy packet injection
-- **Node.js 18+** (for frontend development only)
+- **Nmap** - Network scanning engine
+  - **Windows**: Download from [nmap.org](https://nmap.org/download.html) and ensure **Npcap** is installed during setup
+  - **Linux**: `sudo apt install nmap` (Debian/Ubuntu) or `sudo yum install nmap` (RHEL/CentOS)
+  - **macOS**: `brew install nmap`
+- **Npcap/libpcap** - Required for Scapy packet injection
+  - **Windows**: Installed with Nmap (check the Npcap option)
+  - **Linux/macOS**: Usually pre-installed with Nmap
+- **Node.js 18+** and **npm** - For frontend development
 
 ### Installation
 
@@ -204,25 +210,15 @@ pip install -r requirements.txt
 
 #### 3. Environment Configuration
 
-Create a `.env` file in the root directory with your credentials:
-```env
-# Google Gemini API Key (from Google AI Studio)
-GOOGLE_API_KEY="your_gemini_api_key_here"
+You need to configure environment variables for both backend and frontend.
 
-# Firebase Configuration
-FIREBASE_WEB_API_KEY="your_firebase_web_api_key"
-FIREBASE_TYPE="service_account"
-FIREBASE_PROJECT_ID="your_firebase_project_id"
-FIREBASE_PRIVATE_KEY_ID="your_private_key_id"
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
-FIREBASE_CLIENT_EMAIL="your_service_account_email"
-FIREBASE_CLIENT_ID="your_client_id"
-FIREBASE_AUTH_URI="https://accounts.google.com/o/oauth2/auth"
-FIREBASE_TOKEN_URI="https://oauth2.googleapis.com/token"
-FIREBASE_AUTH_PROVIDER_X509_CERT_URL="https://www.googleapis.com/oauth2/v1/certs"
-FIREBASE_CLIENT_X509_CERT_URL="your_cert_url"
-FIREBASE_UNIVERSE_DOMAIN="googleapis.com"
-```
+Use the provided templates:
+- Backend: `backend/.env.example`
+- Frontend: `frontend/.env.example`
+
+Create your local `.env` files by copying the examples and filling in values.
+
+> **Note:** For production deployment, `VITE_API_URL` should point to your production backend URL.
 
 #### 4. Frontend Setup (React) - Optional
 
@@ -264,7 +260,6 @@ Open `http://localhost:5173` in your browser.
 - **🤖 AI-Powered Analysis**: Google Gemini 2.5 Flash correlates vulnerabilities with real-world exploits
 - **🔐 Firewall Detection**: Dual-engine approach with fallback inference for robust firewall identification
 - **📊 Executive Reports**: Clear, actionable threat reports with remediation guidance
-- **☁️ Cloud Sync**: Firebase Firestore integration for multi-device scan history
 - **🎨 Modern UI**: React-based dashboard with real-time visualization
 - **📈 Threat Scoring**: CVSS-based severity assessment for all discovered vulnerabilities
 - **🔒 Privacy-First**: PII redaction in all scanned data before AI analysis
@@ -304,7 +299,7 @@ curl "http://localhost:8000/api/health"
 Visit `http://localhost:8000/docs` for interactive Swagger UI documentation of all endpoints.
 
 ---
-## �️ Technology Stack
+## 🧰 Technology Stack
 
 ### Backend
 - **Framework**: FastAPI 0.128.0 (Async web framework)
@@ -314,8 +309,7 @@ Visit `http://localhost:8000/docs` for interactive Swagger UI documentation of a
   - `scapy` 2.7.0 - Packet crafting & firewall testing
   - TShark - Packet capture analysis
 - **AI Integration**: `google-generativeai` 0.8.6 (Gemini 2.5 Flash)
-- **Database**: `firebase-admin` 7.1.0 (Firestore)
-- **Data Processing**: pandas, requests
+- **Data Processing**: requests
 - **Environment**: `python-dotenv` for configuration
 
 ### Frontend
@@ -328,22 +322,57 @@ Visit `http://localhost:8000/docs` for interactive Swagger UI documentation of a
 
 ### Cloud Services (Google)
 - **Gemini 2.5 Flash** - Threat intelligence
-- **Firebase Authentication** - User management
-- **Firestore Database** - Persistent storage
 
 ---
 
-## 🌐 Deployment
+## 🌐 Production Deployment
 
-The application is available at: https://netsec-ai-scanner.streamlit.app/
+### Live Application
+**Frontend:** [https://netsec-ai-scanner.vercel.app/](https://netsec-ai-scanner.vercel.app/)
 
-**Note**: The current deployment uses the legacy Streamlit interface. A modernized FastAPI + React version is in active development.
+### Architecture Overview
+The **NetSec AI Scanner** is deployed using a secure, hybrid cloud architecture:
+
+#### Frontend Deployment
+- **Platform:** [Vercel](https://vercel.com/)
+- **SSL/TLS:** Automatic HTTPS with Vercel's edge network
+- **Build:** Vite production build with optimized assets
+- **CDN:** Global content delivery for low-latency access
+
+#### Backend Deployment
+- **Platform:** Google Cloud Platform (GCP)
+- **Instance Type:** `e2-micro` (Always Free Tier)
+- **Region:** `us-central1-a` (Iowa, USA)
+- **Operating System:** Ubuntu Server with Nginx reverse proxy
+- **SSL/TLS:** Let's Encrypt certificates managed via Certbot
+- **Domain Strategy:** Using `.nip.io` wildcard DNS for SSL certificate validation
+- **Optimization:** Configured with 2GB swap file to handle network scanning on 1GB RAM
+
+#### Security Features
+- **End-to-End Encryption:** All communication encrypted via SSL/TLS (HTTPS)
+- **CORS Policy:** Backend API access restricted to authorized frontend origins
+- **Environment Isolation:** Production credentials managed via secure environment variables
+- **No Hardcoded Secrets:** Backend URL and API keys never committed to repository
+
+#### Infrastructure Highlights
+- **Zero-Cost Deployment:** Leveraging GCP Always Free Tier + Vercel free hosting
+- **24/7 Availability:** Both frontend and backend run continuously
+- **SSL Verification:** Green lock in browsers - no "Mixed Content" warnings
+- **API Documentation:** Interactive Swagger UI available at backend `/docs` endpoint
+
+### Backend Configuration
+The frontend communicates with the FastAPI backend via the `VITE_API_URL` environment variable.
+
+- **Production:** Backend URL is configured securely via environment variables (not exposed publicly)
+- **Local Development:** `http://localhost:8000`
+
+> **Security Note:** The production backend URL is intentionally not published in documentation to prevent unauthorized access and potential abuse of scanning capabilities.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ---
 
